@@ -1,0 +1,17 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    cli_version: 0.12.5
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    python_version: 3.10.10
+    start_time: 1679950066
+    t:
+      1:
+      - 12
+      4: 3.10.10
+      5: 0.12.5
+      8:
+      - 5

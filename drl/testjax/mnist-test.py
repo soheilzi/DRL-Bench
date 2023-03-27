@@ -5,6 +5,24 @@ import jax
 import jaxlib
 import numpy as np
 import haiku as hk
+import optax
+
+import numpy as np
+import matplotlib.pyplot as plt
+import struct
+import gzip
+import os
+import sys
+import time
+import random
+import math
+import pickle
+import argparse
+import time
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+
+import wandb
 
 # import data from ubyte files
 def load_mnist(path, kind='train'):
@@ -32,15 +50,15 @@ def load_mnist(path, kind='train'):
 
 # load data
 
-train_images, train_labels = load_mnist('data', kind='train')
-test_images, test_labels = load_mnist('data', kind='t10k')
+train_images, train_labels = load_mnist('./data', kind='train')
+test_images, test_labels = load_mnist('./data', kind='t10k')
 
 #select 2000 samples from training set and 1000 samples from test set
-train_images = train_images[0:2000]
-train_labels = train_labels[0:2000]
+train_images = train_images
+train_labels = train_labels
 
-test_images = test_images[0:1000]
-test_labels = test_labels[0:1000]
+test_images = test_images
+test_labels = test_labels
 
 #one-hot encoding
 train_labels = np.eye(10)[train_labels]
@@ -57,20 +75,64 @@ def simple_model(x):
     return mlp(x)
 
 
-# define loss function
-# def loss(params, x, y):
-#     y_pred = model.apply(params, x)
-#     #return jax cross entropy loss function nn
-#     return -jnp.mean(jnp.sum(y * jnp.log(y_pred), axis=1))
-
-# # define accuracy function
-# def accuracy(params, x, y):
-#     y_pred = model.apply(params, x)
-#     #return jax cross entropy loss function nn
-#     return jnp.mean(jnp.argmax(y_pred, axis=1) == jnp.argmax(y, axis=1))
-
-
 smodel = hk.without_apply_rng(hk.transform(simple_model))
 params = smodel.init(jax.random.PRNGKey(42), jnp.ones((1, 784)))
 
 print("testing values: ", smodel.apply(params, jnp.ones((1, 784))))
+
+# define loss function
+def loss(params, x, y):
+    y_pred = smodel.apply(params, x)
+    #return jax cross entropy loss function nn
+    return -jnp.mean(jnp.sum(y * jnp.log(y_pred), axis=1))
+
+#define gradient function
+grad = jax.grad(loss)
+
+# define optimizer
+opt = optax.adam(1e-3)
+
+optstate = opt.init(params)
+
+# #calculate gradient
+# grads = jax.grad(loss)(params, train_images, train_labels)
+
+# updates, optstate = opt.update(grads, optstate)
+
+# params = optax.apply_updates(params, updates)
+
+#for loop for training batches
+#break data into batches
+batch_size = 32
+num_batches = train_images.shape[0] // batch_size
+num_epochs = 100
+
+#sety up wandb
+wandb.init(project="drl-bench", entity="soheilzi")
+
+
+for epoch in range(num_epochs):
+    for j in range(num_batches):
+        batch = train_images[j * batch_size:(j + 1) * batch_size]
+        batch_labels = train_labels[j * batch_size:(j + 1) * batch_size]
+        grads = jax.grad(loss)(params, batch, batch_labels)
+        updates, optstate = opt.update(grads, optstate)
+        params = optax.apply_updates(params, updates)
+    #test accuracy
+    y_pred = smodel.apply(params, test_images)
+    y_pred = np.argmax(y_pred, axis=1)
+    y_true = np.argmax(test_labels, axis=1)
+    test_accuracy = np.mean(y_pred == y_true)
+    print("Epoch: ", epoch, "Test Accuracy: ", test_accuracy)
+    #train accuracy on a random batch
+    batch = train_images[0:batch_size]
+    batch_labels = train_labels[0:batch_size]
+    y_pred = smodel.apply(params, batch)
+    y_pred = np.argmax(y_pred, axis=1)
+    y_true = np.argmax(batch_labels, axis=1)
+    train_accuracy = np.mean(y_pred == y_true)
+
+    print("Epoch: ", epoch, "Train Accuracy: ", train_accuracy)
+    #log to wandb
+    wandb.log({"test_accuracy": np.float32(test_accuracy), "train_accuracy": np.float32(train_accuracy)})
+

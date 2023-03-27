@@ -1,0 +1,149 @@
+Epoch:  0 Test Accuracy:  0.763
+> /home/soheil/DRL-Bench/drl/testjax/mnist-test.py(137)<module>()
+-> print("Epoch: ", epoch, "Train Accuracy: ", train_accuracy)
+
+
+
+
+
+(Pdb) type(train_accuracy)
+<class 'jaxlib.xla_extension.ArrayImpl'>
+
+
+
+
+(Pdb) test_accuracy
+Array(0.763, dtype=float32)
+
+(Pdb) test_accuracy[0]
+*** IndexError: Too many indices for array: 1 non-None/Ellipsis indices for dim 0.
+
+
+(Pdb) test_accuracy.get()
+*** AttributeError: 'ArrayImpl' object has no attribute 'get'
+
+
+
+
+
+
+(Pdb) number(test_accuracy)
+*** NameError: name 'number' is not defined
+
+
+
+
+(Pdb) int(test_accuracy))))
+0
+
+
+(Pdb) float32(test_accuracy)
+*** NameError: name 'float32' is not defined
+
+
+(Pdb) test_accuracy.at())y))
+*** TypeError: '_IndexUpdateHelper' object is not callable
+
+(Pdb) test_accuracy.at[0]
+_IndexUpdateRef(Array(0.763, dtype=float32), 0)
+
+
+(Pdb) test_accuracy.at[0].get()
+*** IndexError: Too many indices for array: 1 non-None/Ellipsis indices for dim 0.
+
+(Pdb) test_accuracy.at[0].get(0)
+*** IndexError: Too many indices for array: 1 non-None/Ellipsis indices for dim 0.
+
+(Pdb) test_accuracy.at[0].get
+<bound method _IndexUpdateRef.get of _IndexUpdateRef(Array(0.763, dtype=float32), 0)>
+
+(Pdb) test_accuracy.at[0]
+_IndexUpdateRef(Array(0.763, dtype=float32), 0)
+
+
+
+
+
+(Pdb) np.array(test_accuracy)
+array(0.763, dtype=float32)
+
+(Pdb) np.array(test_accuracy)[0]
+*** IndexError: too many indices for array: array is 0-dimensional, but 1 were indexed
+
+(Pdb) np.array(test_accuracy)
+array(0.763, dtype=float32)
+
+
+
+
+
+(Pdb) np.float32(test_accuracy)
+0.763
+(Pdb)
+0.763
+(Pdb) --KeyboardInterrupt--
+(Pdb) --KeyboardInterrupt--
+(Pdb)
+Exception in thread Thread-5 (check_network_status):
+Traceback (most recent call last):
+  File "/home/soheil/miniconda3/envs/bench/lib/python3.10/threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "/home/soheil/miniconda3/envs/bench/lib/python3.10/threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/soheil/miniconda3/envs/bench/lib/python3.10/site-packages/wandb/sdk/wandb_run.py", line 149, in check_network_status
+    status_response = self._interface.communicate_network_status()
+  File "/home/soheil/miniconda3/envs/bench/lib/python3.10/site-packages/wandb/sdk/interface/interface.py", line 125, in communicate_network_status
+    resp = self._communicate_network_status(status)
+  File "/home/soheil/miniconda3/envs/bench/lib/python3.10/site-packages/wandb/sdk/interface/interface.py", line 978, in _communicate_network_status
+    resp = self._communicate(req, local=True)
+  File "/home/soheil/miniconda3/envs/bench/lib/python3.10/site-packages/wandb/sdk/interface/interface.py", line 799, in _communicate
+    return self._communicate_async(rec, local=local).get(timeout=timeout)
+  File "/home/soheil/miniconda3/envs/bench/lib/python3.10/site-packages/wandb/sdk/interface/interface.py", line 804, in _communicate_async
+    raise Exception("The wandb backend process has shutdown")
+(Pdb) --KeyboardInterrupt--
+(Pdb) --KeyboardInterrupt--
+(Pdb) np.float32(test_accuracy)
+0.763
+(Pdb)
+Exception in thread Thread-4 (check_status):
+Traceback (most recent call last):
+  File "/home/soheil/miniconda3/envs/bench/lib/python3.10/threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "/home/soheil/miniconda3/envs/bench/lib/python3.10/threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/soheil/miniconda3/envs/bench/lib/python3.10/site-packages/wandb/sdk/wandb_run.py", line 167, in check_status
+    status_response = self._interface.communicate_stop_status()
+  File "/home/soheil/miniconda3/envs/bench/lib/python3.10/site-packages/wandb/sdk/interface/interface.py", line 114, in communicate_stop_status
+    resp = self._communicate_stop_status(status)
+  File "/home/soheil/miniconda3/envs/bench/lib/python3.10/site-packages/wandb/sdk/interface/interface.py", line 968, in _communicate_stop_status
+    resp = self._communicate(req, local=True)
+  File "/home/soheil/miniconda3/envs/bench/lib/python3.10/site-packages/wandb/sdk/interface/interface.py", line 799, in _communicate
+    return self._communicate_async(rec, local=local).get(timeout=timeout)
+  File "/home/soheil/miniconda3/envs/bench/lib/python3.10/site-packages/wandb/sdk/interface/interface.py", line 804, in _communicate_async
+    raise Exception("The wandb backend process has shutdown")
+
+
+(Pdb)
+0.763
+(Pdb)
+0.763
+(Pdb)
+0.763
+(Pdb)
+0.763
+(Pdb)
+0.763
+(Pdb)
+0.763
+
+(Pdb) exit()
+Traceback (most recent call last):
+  File "/home/soheil/DRL-Bench/drl/testjax/mnist-test.py", line 137, in <module>
+    wandb.log({"test_accuracy": np.float32(test_accuracy), "train_accuracy": np.float32(train_accuracy)})
+  File "/home/soheil/DRL-Bench/drl/testjax/mnist-test.py", line 137, in <module>
+    wandb.log({"test_accuracy": np.float32(test_accuracy), "train_accuracy": np.float32(train_accuracy)})
+  File "/home/soheil/miniconda3/envs/bench/lib/python3.10/bdb.py", line 90, in trace_dispatch
+    return self.dispatch_line(frame)
+  File "/home/soheil/miniconda3/envs/bench/lib/python3.10/bdb.py", line 115, in dispatch_line
+    if self.quitting: raise BdbQuit
+bdb.BdbQuit
