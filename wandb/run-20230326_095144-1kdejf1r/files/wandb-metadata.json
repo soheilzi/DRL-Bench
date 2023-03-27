@@ -1,0 +1,16 @@
+{
+    "os": "macOS-10.16-x86_64-i386-64bit",
+    "python": "3.10.10",
+    "heartbeatAt": "2023-03-26T16:51:45.500339",
+    "startedAt": "2023-03-26T16:51:44.759702",
+    "docker": null,
+    "cpu_count": 8,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/Users/soheilxi/Documents/ucsd/drl-bench/drl/scripts/test-wandb.py",
+    "codePath": "drl/scripts/test-wandb.py",
+    "host": "soheils-air.dynamic.ucsd.edu",
+    "username": "soheilxi",
+    "executable": "/opt/anaconda3/envs/bench/bin/python"
+}

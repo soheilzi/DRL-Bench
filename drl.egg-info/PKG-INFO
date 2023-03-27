@@ -1,0 +1,23 @@
+Metadata-Version: 2.1
+Name: drl
+Version: 1.0
+Summary: A robust and flexible deep reinforcement learning framework using jax
+Author: Soheil Zibakhsh Shabgahi
+Requires: jax
+Requires: jaxlib
+Requires: numpy
+Requires: gym
+Requires: matplotlib
+Requires: tqdm
+Requires: optax
+Requires: flax
+Requires: dm_env
+Requires: dm_control
+Requires: dm_tree
+Requires: dm_env_rpc
+Requires: dm_env_rpc_viz
+Requires: dm_env_rpc_viz_client
+Requires: dm_env_rpc_vi
+Requires: mujoco
+Requires: tensorboard
+Requires: torch
