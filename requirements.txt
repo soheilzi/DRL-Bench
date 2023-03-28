@@ -11,7 +11,7 @@ opencv-python==4.6.0.66
 ipdb==0.13.9
 swig==4.0.2
 box2d-py==2.3.8
-jax==0.2.20
+jax
 jaxlib
 wandb==0.12.5
 torchvision>=0.6
@@ -22,3 +22,6 @@ gym[atari]
 gpustat
 pygame
 dm_haiku
+typing-extensions
+typing
+optax
