@@ -69,12 +69,13 @@ def sample_trajectory(env, policy, max_path_length, render=False, render_mode=('
             if hasattr(env, 'sim'):
                 image_obs.append(env.sim.render(camera_name='track', height=500, width=500)[::-1])
             else:
-                image_obs.append(env.render())
+                image_obs.append(np.squeeze(env.render()))
 
         # use the most recent ob to decide what to do
         obs.append(ob)
         ac = policy.get_action(ob) # HINT: query the policy's get_action function
-        ac = ac[0]
+        # import pdb; pdb.set_trace()
+        # ac = ac[0]
         acs.append(ac)
 
         # take that action and record results

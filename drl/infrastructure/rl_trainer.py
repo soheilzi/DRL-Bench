@@ -32,9 +32,9 @@ class RL_Trainer(object):
 
         # Create environment
 
+        self.render_mode = 'rgb_array'
         if self.params['video_log_freq'] > 0:
             self.episode_trigger = lambda episode: episode % self.params['video_log_freq'] == 0
-            self.render_mode = 'rgb_array'
         else:
             self.episode_trigger = lambda episode: False
 
@@ -121,7 +121,7 @@ class RL_Trainer(object):
     def train_agent(self):
         all_logs = []
         for train_step in range(self.params['num_agent_train_steps_per_iter']):
-            ob_batch, ac_batch, re_batch, next_ob_batch, terminal_batch = self.agent.sample(self.params['bacth_size'])
+            ob_batch, ac_batch, re_batch, next_ob_batch, terminal_batch = self.agent.sample(self.params['batch_size'])
             train_log = self.agent.train(ob_batch, ac_batch, re_batch, next_ob_batch, terminal_batch)
             all_logs.append(train_log)
         return all_logs
@@ -132,9 +132,9 @@ class RL_Trainer(object):
         paths = []
         for i in range(number_of_trajectories):
             path = utils.sample_trajectory(env=self.env,
-                                    policy=self.agent.policy,
+                                    policy=self.agent.actor,
                                     max_path_length=self.params['episode_length'],
-                                    render=evaluate and self.logvideo)
+                                    render=evaluate)
             timesteps_this_batch += utils.get_pathlength(path)
             paths.append(path)
             

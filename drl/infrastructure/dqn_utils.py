@@ -79,10 +79,12 @@ def get_env_kwargs(env_name):
         }
         kwargs['exploration_schedule'] = lander_exploration_schedule(kwargs['num_timesteps'])
 
-    elif env_name == 'CartPole-v0':
+    elif env_name == 'CartPole-v1':
+        def cartpole_empty_wrapper(env):
+            return env
         kwargs = {
             'optimizer_spec': cartpole_optimizer(),
-            'q_func': create_simple_non_image_q_network,
+            'q_func': create_lander_q_network,
             'replay_buffer_size': 50000,
             'batch_size': 32,
             'gamma': 1.00,
@@ -93,11 +95,11 @@ def get_env_kwargs(env_name):
             'grad_norm_clipping': 10,
             'lander': False,
             'num_timesteps': 500000,
-            'env_wrappers': lunar_empty_wrapper
+            'env_wrappers': cartpole_empty_wrapper
         }
         kwargs['exploration_schedule'] = lander_exploration_schedule(kwargs['num_timesteps'])
     else:
-        raise NotImplementedError
+        kwargs = {}
 
     return kwargs
 
@@ -538,7 +540,7 @@ class MemoryOptimizedReplayBuffer(object):
             self.obs      = np.empty([self.size] + list(frame.shape), dtype=np.float32 if self.lander else np.uint8)
             self.action   = np.empty([self.size],                     dtype=np.int32)
             self.reward   = np.empty([self.size],                     dtype=np.float32)
-            self.done     = np.empty([self.size],                     dtype=np.bool)
+            self.done     = np.empty([self.size],                     dtype=bool)
         self.obs[self.next_idx] = frame
 
         ret = self.next_idx

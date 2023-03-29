@@ -32,16 +32,16 @@ class Trainer(object):
 
     def run(self):
         # Run training
-        self.rl_trainer.run_training_loop()
+        self.rl_trainer.run_dqn_training_loop()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     
-    parser.add_argument('--exp_name', type=str, default='dqn')
     parser.add_argument(
+        '--env_name',
         '--env',
         type=str, 
-        default='CartPole-v0',
+        default='CartPole-v1',
         choices=['CartPole-v0', 'CartPole-v1', 'MountainCar-v0', 
                  'Acrobot-v1', 'LunarLander-v2', 'LunarLanderContinuous-v2', 
                  'BipedalWalker-v3', 'BipedalWalkerHardcore-v3', 'CarRacing-v0', 
@@ -63,9 +63,10 @@ if __name__ == "__main__":
                  'HandManipulateBlockRotateZTouchSensors-v19', 'HandManipulateBlockRotateZTouchSensors-v20', 
                  'HandManipulateBlockRotateZTouchSensors-v21', 'HandManipulateBlockRotateZ'])
     parser.add_argument('--seed', type=int, default=0)
+    parser.add_argument('--exp_name', type=str, default='dqn_test')
 
     parser.add_argument('--episode_length', '--ep_len', type=int, default=200)
-    parser.add_argument('--num_episodes', type=int, default=1e6)
+    parser.add_argument('--num_episodes', type=int, default=1000000)
     parser.add_argument('--max_steps', type=int, default=1000)
 
     parser.add_argument('--batch_size', type=int, default=32)
@@ -74,7 +75,8 @@ if __name__ == "__main__":
     parser.add_argument('--num_agent_train_steps_per_iter', type=int, default=1)
     parser.add_argument('--num_critic_updates_per_agent_update', type=int, default=1)
     parser.add_argument('--num_trajectory_eval', type=int, default=10)
-    parser.add_argument('--num_trajectory_train', type=int, default=10)
+    parser.add_argument('--num_agent_rollout_steps_per_iter', type=int, default=1)
+    parser.add_argument('--num_', type=int, default=10)
     parser.add_argument('--double_q', action='store_true')
 
     parser.add_argument('--no_gpu', '-ngpu', action='store_true')

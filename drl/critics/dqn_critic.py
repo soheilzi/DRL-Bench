@@ -4,7 +4,7 @@ import torch.optim as optim
 from torch.nn import utils
 from torch import nn
 
-from cs285.infrastructure import pytorch_util as ptu
+from drl.infrastructure import pytorch_util as ptu
 
 
 class DQNCritic(BaseCritic):
