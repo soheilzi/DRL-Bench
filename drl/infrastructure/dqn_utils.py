@@ -79,6 +79,23 @@ def get_env_kwargs(env_name):
         }
         kwargs['exploration_schedule'] = lander_exploration_schedule(kwargs['num_timesteps'])
 
+    elif env_name == 'CartPole-v0':
+        kwargs = {
+            'optimizer_spec': cartpole_optimizer(),
+            'q_func': create_simple_non_image_q_network,
+            'replay_buffer_size': 50000,
+            'batch_size': 32,
+            'gamma': 1.00,
+            'learning_starts': 1000,
+            'learning_freq': 1,
+            'frame_history_len': 1,
+            'target_update_freq': 3000,
+            'grad_norm_clipping': 10,
+            'lander': False,
+            'num_timesteps': 500000,
+            'env_wrappers': lunar_empty_wrapper
+        }
+        kwargs['exploration_schedule'] = lander_exploration_schedule(kwargs['num_timesteps'])
     else:
         raise NotImplementedError
 
@@ -202,6 +219,16 @@ def lander_exploration_schedule(num_timesteps):
         ], outside_value=0.02
     )
 
+
+def cartpole_optimizer():
+    return OptimizerSpec(
+        constructor=optim.Adam,
+        optim_kwargs=dict(
+            lr=1e-3,
+            eps=1e-4
+        ),
+        learning_rate_schedule=lambda epoch: 1e-3,  # keep init learning rate
+    )
 
 def sample_n_unique(sampling_f, n):
     """Helper function. Given a function `sampling_f` that returns

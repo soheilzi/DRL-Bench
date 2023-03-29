@@ -3,7 +3,9 @@ import time
 import argparse
 import gym
 
-from drl.envs.env_utils import get_env_params
+from drl.infrastructure.dqn_utils import get_env_kwargs
+from drl.infrastructure.rl_trainer import RL_Trainer
+from drl.agents.dqn_agent import DQNAgent
 
 class Trainer(object):
     def __init__(self, params):
@@ -17,44 +19,20 @@ class Trainer(object):
             'double_q': params['double_q'],
         }
 
-        env_args = get_env_params(params['env_name'])
-
-        computation_graph_args = {
-            'n_layers': params['n_layers'],
-            'size': params['size'],
-            'learning_rate': params['learning_rate'],
-            }
-
-        self.env_name = params['env_name']
-        self.env = gym.make(self.env_name)
-        self.env.seed(params['seed'])
-        self.env.action_space.seed(params['seed'])
-        self.env.observation_space.seed(params['seed'])
-        self.env._max_episode_steps = params['episode_length']
-        self.max_steps = params['max_steps']
-        self.num_episodes = params['num_episodes']
-        self.batch_size = params['batch_size']
-        self.replay_buffer_size = params['replay_buffer_size']
-        self.num_agent_train_steps_per_iter = params['num_agent_train_steps_per_iter']
-        self.num_critic_updates_per_agent_update = params['num_critic_updates_per_agent_update']
-        self.double_q = params['double_q']
-        self.learning_rate = params['learning_rate']
-        self.discount = params['discount']
-        self.logdir = params['logdir']
-        self.scalar_log_freq = params['scalar_log_freq']
-        self.video_log_freq = params['video_log_freq']
-        self.save_params = params['save_params']
-        self.log_wandb = params['log_wandb']
+        env_args = get_env_kwargs(params['env_name'])
+        
+        self.agent_params = {**train_args, **env_args, **params}
 
         self.params = params
         self.params['agent_class'] = DQNAgent
-        self.params['agent_params'] = agent_params
+        self.params['agent_params'] = self.agent_params
         self.params['batch_size_initial'] = self.params['batch_size']
 
+        self.rl_trainer = RL_Trainer(self.params)
 
     def run(self):
         # Run training
-        self.agent.train(self.env, self.max_steps, self.num_episodes)
+        self.rl_trainer.run_training_loop()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -87,7 +65,7 @@ if __name__ == "__main__":
     parser.add_argument('--seed', type=int, default=0)
 
     parser.add_argument('--episode_length', '--ep_len', type=int, default=200)
-    parser.add_argument('--num_episodes', type=int, default=1000)
+    parser.add_argument('--num_episodes', type=int, default=1e6)
     parser.add_argument('--max_steps', type=int, default=1000)
 
     parser.add_argument('--batch_size', type=int, default=32)
@@ -95,6 +73,8 @@ if __name__ == "__main__":
 
     parser.add_argument('--num_agent_train_steps_per_iter', type=int, default=1)
     parser.add_argument('--num_critic_updates_per_agent_update', type=int, default=1)
+    parser.add_argument('--num_trajectory_eval', type=int, default=10)
+    parser.add_argument('--num_trajectory_train', type=int, default=10)
     parser.add_argument('--double_q', action='store_true')
 
     parser.add_argument('--no_gpu', '-ngpu', action='store_true')
@@ -134,7 +114,7 @@ if __name__ == "__main__":
     # Log to wandb
     if args.log_wandb:
         import wandb
-        wandb.init(project=args.exp_name, config=params)
+        wandb.init(project="drl-bench", entity="soheilzi", config=params)
         wandb.save(os.path.join(logdir, 'params_wandb.txt'))
 
     # Set GPU
