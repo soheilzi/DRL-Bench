@@ -143,6 +143,7 @@ class RL_Trainer(object):
             path = utils.sample_trajectory(env=self.env,
                                     policy=self.agent.actor,
                                     max_path_length=self.params['episode_length'],
+                                    replay_buffer=self.agent.replay_buffer,
                                     render=evaluate)
             timesteps_this_batch += utils.get_pathlength(path)
             paths.append(path)

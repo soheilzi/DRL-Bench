@@ -44,7 +44,7 @@ def register_custom_envs():
 def get_env_kwargs(env_name):
     if env_name in ['MsPacman-v0', 'PongNoFrameskip-v4', 'BreakoutNoFrameskip-v4']:
         kwargs = {
-            'learning_starts': 50000,
+            'learning_starts': 100,#50000,
             'target_update_freq': 10000,
             'replay_buffer_size': int(1e6),
             'num_timesteps': int(2e8),
@@ -168,7 +168,7 @@ class PreprocessAtari(nn.Module):
 def create_atari_q_network(ob_dim, num_actions):
     return nn.Sequential(
         PreprocessAtari(),
-        nn.Conv2d(in_channels=3, out_channels=32, kernel_size=8, stride=4),
+        nn.Conv2d(in_channels=12, out_channels=32, kernel_size=8, stride=4),
         nn.ReLU(),
         nn.Conv2d(in_channels=32, out_channels=64, kernel_size=4, stride=2),
         nn.ReLU(),

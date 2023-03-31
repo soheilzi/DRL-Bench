@@ -51,7 +51,7 @@ if __name__ == "__main__":
     parser.add_argument('--num_episodes', type=int, default=1000000)
     parser.add_argument('--max_steps', type=int, default=1000)
 
-    parser.add_argument('--batch_size', type=int, default=2048)
+    parser.add_argument('--batch_size', type=int, default=64)
     parser.add_argument('--replay_buffer_size', type=int, default=int(1e6))
 
     parser.add_argument('--num_agent_train_steps_per_iter', type=int, default=1)
