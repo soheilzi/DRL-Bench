@@ -15,6 +15,7 @@ class DQNAgent(object):
         self.last_obs = self.env.reset()
 
         self.num_actions = agent_params['ac_dim']
+        self.obs_is_image = agent_params['img']
         self.learning_starts = agent_params['learning_starts']
         self.learning_freq = agent_params['learning_freq']
         self.target_update_freq = agent_params['target_update_freq']
@@ -72,6 +73,10 @@ class DQNAgent(object):
             #obs, reward, done, info = env.step(action)
         obs, reward, done, info = self.env.step(action)
 
+        # if self.obs_is_image:
+        #     # import ipdb; ipdb.set_trace()
+        #     obs = np.transpose(obs, [2, 0, 1])
+
         # TODO store the result of taking this action into the replay buffer
         # HINT1: see your replay buffer's `store_effect` function
         # HINT2: one of the arguments you'll need to pass in is self.replay_buffer_idx from above
@@ -79,7 +84,9 @@ class DQNAgent(object):
 
         # TODO if taking this step resulted in done, reset the env (and the latest observation)
         if done:
-            obs = self.env.reset() 
+            obs = self.env.reset()
+            # if self.obs_is_image:
+            #     obs = np.transpose(obs, [2, 0, 1]) 
         
         self.last_obs = obs
 

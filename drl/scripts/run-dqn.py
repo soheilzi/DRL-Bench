@@ -43,25 +43,7 @@ if __name__ == "__main__":
         type=str, 
         default='CartPole-v1',
         choices=['CartPole-v0', 'CartPole-v1', 'MountainCar-v0', 
-                 'Acrobot-v1', 'LunarLander-v2', 'LunarLanderContinuous-v2', 
-                 'BipedalWalker-v3', 'BipedalWalkerHardcore-v3', 'CarRacing-v0', 
-                 'Pendulum-v0', 'MountainCarContinuous-v0', 'InvertedPendulum-v2', 
-                 'InvertedDoublePendulum-v2', 'HalfCheetah-v2', 'Hopper-v2', 
-                 'Walker2d-v2', 'Ant-v2', 'Humanoid-v2', 'HumanoidStandup-v2', 
-                 'Swimmer-v2', 'Reacher-v2', 'Pusher-v2', 'Thrower-v2', 'Striker-v2', 
-                 'FetchSlide-v1', 'FetchPickAndPlace-v1', 'FetchReach-v1', 'FetchPush-v1', 
-                 'HandManipulateBlockRotateZ-v0', 'HandManipulateBlockRotateZTouchSensors-v0', 
-                 'HandManipulateBlockRotateZTouchSensors-v1', 'HandManipulateBlockRotateZTouchSensors-v2', 
-                 'HandManipulateBlockRotateZTouchSensors-v3', 'HandManipulateBlockRotateZTouchSensors-v4', 
-                 'HandManipulateBlockRotateZTouchSensors-v5', 'HandManipulateBlockRotateZTouchSensors-v6', 
-                 'HandManipulateBlockRotateZTouchSensors-v7', 'HandManipulateBlockRotateZTouchSensors-v8', 
-                 'HandManipulateBlockRotateZTouchSensors-v9', 'HandManipulateBlockRotateZTouchSensors-v10', 
-                 'HandManipulateBlockRotateZTouchSensors-v11', 'HandManipulateBlockRotateZTouchSensors-v12', 
-                 'HandManipulateBlockRotateZTouchSensors-v13', 'HandManipulateBlockRotateZTouchSensors-v14', 
-                 'HandManipulateBlockRotateZTouchSensors-v15', 'HandManipulateBlockRotateZTouchSensors-v16', 
-                 'HandManipulateBlockRotateZTouchSensors-v17', 'HandManipulateBlockRotateZTouchSensors-v18', 
-                 'HandManipulateBlockRotateZTouchSensors-v19', 'HandManipulateBlockRotateZTouchSensors-v20', 
-                 'HandManipulateBlockRotateZTouchSensors-v21', 'HandManipulateBlockRotateZ'])
+                 'Acrobot-v1', 'LunarLander-v2', 'MsPacman-v0', 'PongNoFrameskip-v4', 'BreakoutNoFrameskip-v4'])
     parser.add_argument('--seed', type=int, default=0)
     parser.add_argument('--exp_name', type=str, default='dqn_test')
 
@@ -69,14 +51,13 @@ if __name__ == "__main__":
     parser.add_argument('--num_episodes', type=int, default=1000000)
     parser.add_argument('--max_steps', type=int, default=1000)
 
-    parser.add_argument('--batch_size', type=int, default=32)
+    parser.add_argument('--batch_size', type=int, default=2048)
     parser.add_argument('--replay_buffer_size', type=int, default=int(1e6))
 
     parser.add_argument('--num_agent_train_steps_per_iter', type=int, default=1)
     parser.add_argument('--num_critic_updates_per_agent_update', type=int, default=1)
     parser.add_argument('--num_trajectory_eval', type=int, default=10)
     parser.add_argument('--num_agent_rollout_steps_per_iter', type=int, default=1)
-    parser.add_argument('--num_', type=int, default=10)
     parser.add_argument('--double_q', action='store_true')
 
     parser.add_argument('--no_gpu', '-ngpu', action='store_true')
@@ -87,7 +68,7 @@ if __name__ == "__main__":
     parser.add_argument('--save_params', action='store_true')
     parser.add_argument('--log_wandb', action='store_true')
 
-    parser.add_argument('--learning_rate', '--lr', type=float, default=1e-3)
+    parser.add_argument('--learning_rate', '--lr', type=float, default=1e-4)
     parser.add_argument('--discount', '--gamma', type=float, default=0.99)
 
     args = parser.parse_args()

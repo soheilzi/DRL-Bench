@@ -54,7 +54,7 @@ def mean_squared_error(a, b):
 ############################################
 ############################################
 
-def sample_trajectory(env, policy, max_path_length, render=False, render_mode=('rgb_array')):
+def sample_trajectory(env, policy, max_path_length, render=False, render_mode='rgb_array'):
     # TODO: get this from hw1 or hw2
     # initialize env for the beginning of a new rollout
     ob = env.reset() # HINT: should be the output of resetting the env
@@ -69,7 +69,7 @@ def sample_trajectory(env, policy, max_path_length, render=False, render_mode=('
             if hasattr(env, 'sim'):
                 image_obs.append(env.sim.render(camera_name='track', height=500, width=500)[::-1])
             else:
-                image_obs.append(np.squeeze(env.render()))
+                image_obs.append(np.squeeze(env.render( mode=render_mode)))
 
         # use the most recent ob to decide what to do
         obs.append(ob)

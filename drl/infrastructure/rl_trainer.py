@@ -17,7 +17,7 @@ import optax
 from drl.infrastructure import utils
 
 from drl.infrastructure.logger import Logger
-
+from drl.infrastructure import pytorch_util as ptu
 
 
 
@@ -29,6 +29,11 @@ class RL_Trainer(object):
         self.env_name = params['env_name']
         self.logger = Logger(self.params['logdir'])
 
+        # remove later:
+        ptu.init_gpu(
+            use_gpu=not self.params['no_gpu'],
+            gpu_id=self.params['which_gpu']
+        )
 
         # Create environment
 
@@ -43,6 +48,8 @@ class RL_Trainer(object):
 
         self.env = wrappers.RecordEpisodeStatistics(self.env, deque_size=1000)
         self.env = ReturnWrapper(self.env)
+        if 'env_wrappers' in self.params:
+            self.env = params['env_wrappers'](self.env)
 
         if self.params['video_log_freq'] > 0:
             self.env = wrappers.RecordVideo(self.env, os.path.join(self.params['logdir'], "gym"), episode_trigger=self.episode_trigger)
@@ -61,8 +68,10 @@ class RL_Trainer(object):
 
         ob_dim = self.env.observation_space.shape if img else self.env.observation_space.shape[0]
         ac_dim = self.env.action_space.n if discrete else self.env.action_space.shape[0]
+        
         self.params['agent_params']['ac_dim'] = ac_dim
         self.params['agent_params']['ob_dim'] = ob_dim
+        self.params['agent_params']['img'] = img
 
         # simulation timestep, will be used for video saving
         if 'model' in dir(self.env):

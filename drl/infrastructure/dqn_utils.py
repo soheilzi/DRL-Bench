@@ -42,7 +42,7 @@ def register_custom_envs():
 
 
 def get_env_kwargs(env_name):
-    if env_name in ['MsPacman-v0', 'PongNoFrameskip-v4']:
+    if env_name in ['MsPacman-v0', 'PongNoFrameskip-v4', 'BreakoutNoFrameskip-v4']:
         kwargs = {
             'learning_starts': 50000,
             'target_update_freq': 10000,
@@ -86,7 +86,7 @@ def get_env_kwargs(env_name):
             'optimizer_spec': cartpole_optimizer(),
             'q_func': create_lander_q_network,
             'replay_buffer_size': 50000,
-            'batch_size': 32,
+            'batch_size': 1024,
             'gamma': 1.00,
             'learning_starts': 1000,
             'learning_freq': 1,
@@ -99,7 +99,24 @@ def get_env_kwargs(env_name):
         }
         kwargs['exploration_schedule'] = lander_exploration_schedule(kwargs['num_timesteps'])
     else:
-        kwargs = {}
+        def empty_wrapper(env):
+            return env
+        kwargs = {
+            'optimizer_spec': cartpole_optimizer(),
+            'q_func': create_lander_q_network,
+            'replay_buffer_size': 50000,
+            'batch_size': 1024,
+            'gamma': .99,
+            'learning_starts': 1000,
+            'learning_freq': 1,
+            'frame_history_len': 1,
+            'target_update_freq': 3000,
+            'grad_norm_clipping': 10,
+            'lander': False,
+            'num_timesteps': 500000,
+            'env_wrappers': empty_wrapper
+        }
+        kwargs['exploration_schedule'] = lander_exploration_schedule(kwargs['num_timesteps'])
 
     return kwargs
 
@@ -151,17 +168,18 @@ class PreprocessAtari(nn.Module):
 def create_atari_q_network(ob_dim, num_actions):
     return nn.Sequential(
         PreprocessAtari(),
-        nn.Conv2d(in_channels=4, out_channels=32, kernel_size=8, stride=4),
+        nn.Conv2d(in_channels=3, out_channels=32, kernel_size=8, stride=4),
         nn.ReLU(),
         nn.Conv2d(in_channels=32, out_channels=64, kernel_size=4, stride=2),
         nn.ReLU(),
         nn.Conv2d(in_channels=64, out_channels=64, kernel_size=3, stride=1),
         nn.ReLU(),
         Flatten(),
-        nn.Linear(3136, 512),  # 3136 hard-coded based on img size + CNN layers
+        nn.Linear(22528, 512),  # 3136 hard-coded based on img size + CNN layers
         nn.ReLU(),
         nn.Linear(512, num_actions),
     )
+
 
 def atari_exploration_schedule(num_timesteps):
     return PiecewiseSchedule(

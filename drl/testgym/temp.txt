@@ -1,0 +1,4 @@
+export CPATH=$CONDA_PREFIX/include
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/soheil/.mujoco/mujoco210/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/soheil/.mujoco/mujoco210
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/nvidia

@@ -105,6 +105,7 @@ class DQNCritic(BaseCritic):
             target_param.data.copy_(param.data)
 
     def qa_values(self, obs):
+        # import pdb ; pdb.set_trace()
         obs = ptu.from_numpy(obs)
         qa_values = self.q_net(obs)
         return ptu.to_numpy(qa_values)
