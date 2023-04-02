@@ -1,24 +1,3 @@
-{
-    "os": "Linux-5.4.0-139-generic-x86_64-with-glibc2.31",
-    "python": "3.10.10",
-    "heartbeatAt": "2023-03-27T21:17:53.061392",
-    "startedAt": "2023-03-27T21:17:52.413875",
-    "docker": null,
-    "gpu": "NVIDIA RTX A6000",
-    "gpu_count": 3,
-    "cpu_count": 128,
-    "cuda": null,
-    "args": [],
-    "state": "running",
-    "program": "/home/soheil/DRL-Bench/drl/testjax/mnist-test.py",
-    "codePath": "drl/testjax/mnist-test.py",
-    "git": {
-        "remote": "https://github.com/soheilzi/DRL-Bench.git",
-        "commit": "b14d274101e03a43e17a4d76a53a0c6ef2c59a27"
-    },
-    "email": null,
-    "root": "/home/soheil/DRL-Bench",
-    "host": "acesipu",
-    "username": "soheil",
-    "executable": "/home/soheil/miniconda3/envs/bench/bin/python"
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:09ef81a57eeea452f0ad067e80083a2052d04fce7379306e2f1e3c3af3faf8dc
+size 763

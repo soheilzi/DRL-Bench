@@ -1,19 +1,3 @@
-import numpy as np
-
-
-class ArgMaxPolicy(object):
-
-    def __init__(self, critic):
-        self.critic = critic
-
-    def get_action(self, obs):
-        if len(obs.shape) > 3:
-            observation = obs
-        else:
-            observation = obs[None]
-        
-        ## TODO return the action that maxinmizes the Q-value 
-        # at the current observation as the output
-        qa_t_values = self.critic.qa_values(observation)
-        action = np.argmax(qa_t_values)
-        return action.squeeze()
+version https://git-lfs.github.com/spec/v1
+oid sha256:8ed5453ba91592993891630942bfade090a776095821fa041ccdc702fd7f4428
+size 505

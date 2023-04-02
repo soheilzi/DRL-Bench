@@ -1,1 +1,3 @@
-{"test_accuracy": 0.9614999890327454, "train_accuracy": 1.0, "_runtime": 184, "_timestamp": 1679952056, "_step": 5, "_wandb": {"runtime": 197}}
+version https://git-lfs.github.com/spec/v1
+oid sha256:faac45002be3095d1fb278ef6aee74de04215d2fc1de7a65cce1253e851c5613
+size 143

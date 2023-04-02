@@ -1,13 +1,3 @@
-# setup.py
-from distutils.core import setup
-
-setup(
-    name='drl',
-    version='1.0',
-    description='A robust and flexible deep reinforcement learning framework using jax',
-    author='Soheil Zibakhsh Shabgahi',
-    packages=['drl'],
-    package_dir={'drl': 'drl'},
-    package_data={'drl': ['*.py']},
-    requires=['jax', 'jaxlib', 'numpy', 'gym', 'matplotlib', 'tqdm', 'optax', 'flax', 'dm_env', 'dm_control', 'dm_tree', 'dm_env_rpc', 'dm_env_rpc_viz', 'dm_env_rpc_viz_client', 'dm_env_rpc_vi', 'mujoco', 'tensorboard', 'torch']
-)
+version https://git-lfs.github.com/spec/v1
+oid sha256:28c820c3a7ab457eccba5ad2310353b11634c832876c5e04f28bba5a7ce6c3c7
+size 535

@@ -1,16 +1,3 @@
-class BaseAgent(object):
-    def __init__(self, **kwargs):
-        super(BaseAgent, self).__init__(**kwargs)
-
-    def train(self) -> dict:
-        """Return a dictionary of logging information."""
-        raise NotImplementedError
-
-    def add_to_replay_buffer(self, paths):
-        raise NotImplementedError
-
-    def sample(self, batch_size):
-        raise NotImplementedError
-
-    def save(self, path):
-        raise NotImplementedError
+version https://git-lfs.github.com/spec/v1
+oid sha256:277b1a61668d22a592afcb6a62f9ebbfbe1f37d990590f72bc4091dd94da5394
+size 438

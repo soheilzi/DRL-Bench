@@ -1,17 +1,3 @@
-wandb_version: 1
-
-_wandb:
-  desc: null
-  value:
-    cli_version: 0.12.5
-    is_jupyter_run: false
-    is_kaggle_kernel: false
-    python_version: 3.10.10
-    start_time: 1679949108
-    t:
-      1:
-      - 12
-      4: 3.10.10
-      5: 0.12.5
-      8:
-      - 5
+version https://git-lfs.github.com/spec/v1
+oid sha256:b25c701c8fddf25cca5b90fb834a3ef75818ee204bbc9912882363e3dfcfe336
+size 260
